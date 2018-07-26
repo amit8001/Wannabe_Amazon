@@ -1,0 +1,30 @@
+{
+  "name": "wannabe_amazon",
+  "version": "1.0.0",
+  "description": "Amazon like portal as a school assignment",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amit8001/Wannabe_Amazon.git"
+  },
+  "keywords": [
+    "mysql",
+    "inquirer",
+    "node",
+    "cli"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amit8001/Wannabe_Amazon/issues"
+  },
+  "homepage": "https://github.com/amit8001/Wannabe_Amazon#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "inquirer": "^6.0.0",
+    "mysql": "^2.16.0"
+  }
+}
