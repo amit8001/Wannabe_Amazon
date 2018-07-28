@@ -132,6 +132,9 @@ function show_items(){
               // console.log(query);
                connection.query(query, function(err, res) {
                  if (err) throw err;
+
+                 if (res.length > 0){ 
+                  console.log(res);
                   console.log(res[0].stock_quantity);
                   console.log(answers.quantity);
                   //validating based on stock qty
@@ -144,7 +147,8 @@ function show_items(){
                     console.log ("Thanks for your order! You total cost is $"+(res[0].price*answers.quantity));
                     var query = connection.query(
                       "UPDATE products SET ? WHERE ?", [{
-                              stock_quantity: (res[0].stock_quantity-answers.quantity)
+                              stock_quantity: (res[0].stock_quantity-answers.quantity),
+                              product_sales: (res[0].product_sales+(res[0].price*answers.quantity))
                           },
                           {
                               item_id: answers.item_id_choice
@@ -152,12 +156,20 @@ function show_items(){
                       ],
                       function(err, res) {
                           console.log(res.affectedRows + " records updated!\n");
+                          console.log("After this purchase...");
+                          choose_action();
                           connection.end();
                       }
                   );  
 
                   }
 
+                }
+                else{
+                  console.log("The item number "+ answers.item_id_choice+" was not found. Please choose again");
+                  show_items();  
+                }    
+            
                })
           })
   }
