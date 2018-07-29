@@ -31,11 +31,11 @@ function init_load() {
       choices: [
         "View Product Sales by Department",
         "Create New Department",
-        "Exit Supervisor Portal"
+        "Exit Supervisor Site"
       ]
     })
     .then(function(answer) {
-      console.log("You selected "+answer.action);
+     // console.log("You selected "+answer.action);
       switch (answer.action) {
       case "View Product Sales by Department":
         prodSalesbyDept();
@@ -43,7 +43,7 @@ function init_load() {
       case "Create New Department":
         addDept();
         break;
-      case "Exit Supervisor Portal":
+      case "Exit Supervisor Site":
         exitPortal();
        break;
       }
@@ -109,7 +109,7 @@ function  addDept(){
     }
 
     function exitPortal(){
-      console.log("Good bye!");
+      console.log("Thanks for visting Bamazon Supervisor site! Bye!");
     	connection.end();
 	    return;
     }

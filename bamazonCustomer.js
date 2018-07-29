@@ -39,15 +39,16 @@ function init_load() {
 }
 
 function exit_out(){
-  console.log("Thanks for visting us !");
-  process.exit();
+  console.log("Thanks for visting Bamazon site! Bye!");
+  connection.end();
+  //process.exit();
 }
 
 var dept_arr = [];
 //var item_choice;
 
 function show_items(){
-  console.log("Inside show items!");
+  //console.log("Inside show items!");
 
   connection.query("SELECT distinct department_name FROM products", function(err, res) {
     if (err) throw err;
@@ -102,7 +103,7 @@ function show_items(){
           show_items();
       } 
       else if (data.user_choice =="Purchase item") {
-          console.log("About to make a purchase");
+         // console.log("About to make a purchase");
           purchase_items();
       }
       else {
@@ -126,24 +127,24 @@ function show_items(){
           message: "How many units do you want of it?"
       }
           ]).then(function(answers) { 
-              console.log("You requested item with id: "+answers.item_id_choice);
-              console.log("You requested units: "+answers.quantity);
+              //console.log("You requested item with id: "+answers.item_id_choice);
+              //console.log("You requested units: "+answers.quantity);
               var query = "SELECT * FROM products WHERE item_id='" + answers.item_id_choice + "'"
               // console.log(query);
                connection.query(query, function(err, res) {
                  if (err) throw err;
 
                  if (res.length > 0){ 
-                  console.log(res);
-                  console.log(res[0].stock_quantity);
-                  console.log(answers.quantity);
+                 // console.log(res);
+                 // console.log(res[0].stock_quantity);
+                 // console.log(answers.quantity);
                   //validating based on stock qty
                   if (answers.quantity > res[0].stock_quantity){
                     console.log("Insufficient quantity! Please provide info again");
                     purchase_items();  
                   }
                   else{
-                    console.log("Now entering final fulfillment!");
+                   // console.log("Now entering final fulfillment!");
                     console.log ("Thanks for your order! You total cost is $"+(res[0].price*answers.quantity));
                     var query = connection.query(
                       "UPDATE products SET ? WHERE ?", [{
@@ -158,7 +159,7 @@ function show_items(){
                           console.log(res.affectedRows + " records updated!\n");
                           console.log("After this purchase...");
                           choose_action();
-                          connection.end();
+                         // connection.end();
                       }
                   );  
 

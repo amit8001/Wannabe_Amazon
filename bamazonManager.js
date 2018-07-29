@@ -32,11 +32,12 @@ function init_load() {
         "View Products for Sale",
         "View Low Inventory",
         "Add to Inventory",
-        "Add New Product"
+        "Add New Product",
+        "Exit"
       ]
     })
     .then(function(answer) {
-      console.log("You selected "+answer.action);
+      //console.log("You selected "+answer.action);
       switch (answer.action) {
       case "View Products for Sale":
         productSearch();
@@ -53,9 +54,21 @@ function init_load() {
       case "Add New Product":
         addProduct();
         break;
+      
+      case "Exit":
+        exit();
+        break;
+
       }
     });
 }
+
+function exit(){
+  console.log("Thanks for visting the Bamazon Manager site! Bye!");
+  connection.end();
+
+}
+
 
 //function to list every available item: the item IDs, names, prices, and quantities.
 function productSearch(){
@@ -67,12 +80,12 @@ function productSearch(){
 		var productsForSaleTable = new Table({
 			//Define names for the header rows.
 		    head: ['Item number', 'Item', 'Deparment', 'Price', 'Quantity in stock']
-		  //, colWidths: [100, 200, 200, 200]
+		  
 		});
 		 
-		//Loop through the database query results and push the results to the table and populate table with the product data.
+		//Loop through query results and push the results to the table and populate table with the product data.
 		for (var i=0; i < res.length; i++) {			
-			// table is an Array, so you can `push`, `unshift`, `splice` and friends 
+			// table is an Array
 			productsForSaleTable.push(
 		    	[res[i].item_id, res[i].product_name,  res[i].department_name, res[i].price, res[i].stock_quantity],
 			);
@@ -94,12 +107,12 @@ function viewLowInventory(){
 		var productsForSaleTable = new Table({
 			//Define names for the header rows.
 		    head: ['Item number', 'Item', 'Deparment', 'Price', 'Quantity in stock']
-		  //, colWidths: [100, 200, 200, 200]
+		 
 		});
 		 
 		//Loop through the database query results and push the results to the table and populate table with the product data.
 		for (var i=0; i < res.length; i++) {			
-			// table is an Array, so you can `push`, `unshift`, `splice` and friends 
+			// table is an Array
 			productsForSaleTable.push(
 		    	[res[i].item_id, res[i].product_name,  res[i].department_name, res[i].price, res[i].stock_quantity],
 			);
@@ -129,16 +142,16 @@ function addInventory(){
       message: "How many units of it would you like to add?"
   }
       ]).then(function(answers) { 
-          console.log("You are interested in item with id: "+answers.item_id_choice);
-          console.log("You want to add units= "+answers.quantity);
+        //  console.log("You are interested in item with id: "+answers.item_id_choice);
+        //  console.log("You want to add units= "+answers.quantity);
           var query = "SELECT * FROM products WHERE item_id='" + answers.item_id_choice + "'"
           connection.query(query, function(err, res) {
             if (err) throw err;
 
             if (res.length > 0){ 
-              console.log(res);
-              console.log(res[0].stock_quantity);
-              console.log(answers.quantity);
+          //    console.log(res);
+          //    console.log(res[0].stock_quantity);
+          //    console.log(answers.quantity);
 
                 var query = connection.query(
                   "UPDATE products SET ? WHERE ?", [{
