@@ -75,10 +75,9 @@ function productSearch(){
   connection.query("SELECT * FROM products", function(err, res){
 		if(err) throw err;
 
-		//Display the product information to the terminal, including the quantity in stock.
-		//Create table to hold the data we get back from the database query.
-		var productsForSaleTable = new Table({
-			//Define names for the header rows.
+		//Display the product information by creating table to hold the query data
+		var productsTable = new Table({
+			//Define headers
 		    head: ['Item number', 'Item', 'Deparment', 'Price', 'Quantity in stock']
 		  
 		});
@@ -86,12 +85,12 @@ function productSearch(){
 		//Loop through query results and push the results to the table and populate table with the product data.
 		for (var i=0; i < res.length; i++) {			
 			// table is an Array
-			productsForSaleTable.push(
+			productsTable.push(
 		    	[res[i].item_id, res[i].product_name,  res[i].department_name, res[i].price, res[i].stock_quantity],
 			);
 		} 
 		//Display table to terminal.
-		console.log(productsForSaleTable.toString());
+		console.log(productsTable.toString());
 	});
 
   setTimeout(init_load, 3000); 
@@ -102,23 +101,22 @@ function viewLowInventory(){
 		if(err) throw err;
 
     if (res.length > 0){
-		//Display the product information to the terminal, including the quantity in stock.
-		//Create table to hold the data we get back from the database query.
-		var productsForSaleTable = new Table({
-			//Define names for the header rows.
+		//Display the product information by creating table to hold the query data
+		var productsTable = new Table({
+			//Define header column names.
 		    head: ['Item number', 'Item', 'Deparment', 'Price', 'Quantity in stock']
 		 
 		});
 		 
-		//Loop through the database query results and push the results to the table and populate table with the product data.
+		//Loop through query results and populate table with the product data.
 		for (var i=0; i < res.length; i++) {			
 			// table is an Array
-			productsForSaleTable.push(
+			productsTable.push(
 		    	[res[i].item_id, res[i].product_name,  res[i].department_name, res[i].price, res[i].stock_quantity],
 			);
 		} 
 		//Display table to terminal.
-    console.log(productsForSaleTable.toString());
+    console.log(productsTable.toString());
     
   }
   else {

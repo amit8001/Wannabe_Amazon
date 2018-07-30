@@ -50,29 +50,26 @@ function init_load() {
     });
 }
 
-//function to display a summarized table for each department
+//function to display a summarized table for each department displaying metrics like Product_Sales, Overhead Costs
 function prodSalesbyDept(){
   connection.query("select d.department_id, d.department_name, d.overhead_costs, dept_rollup.Product_Sales,"+
   "(dept_rollup.Product_Sales-d.overhead_costs) as total_profit from departments d inner join"+
   "(select department_name, sum(product_sales) as Product_Sales from products group by department_name)dept_rollup on d.department_name = dept_rollup.department_name", function(err, res){
 		if(err) throw err;
 
-		//Display the product information to the terminal, including the quantity in stock.
-		//Create table to hold the data we get back from the database query.
+		//Display the query results by creating a new table object of type Table
 		var deptsummaryTable = new Table({
 			//Define names for the header rows.
 		    head: ['Department ID', 'Department Name', 'Overhead Costs', 'Product Sales', 'Total Profit']
-		  //, colWidths: [100, 200, 200, 200]
 		});
 		 
-		//Loop through the database query results and push the results to the table and populate table with the product data.
+		//Loop through the query and populate the table object with query results.
 		for (var i=0; i < res.length; i++) {			
-			// table is an Array, so you can `push`, `unshift`, `splice` and friends 
 			deptsummaryTable.push(
 		    	[res[i].department_id, res[i].department_name,  res[i].overhead_costs, res[i].Product_Sales, res[i].total_profit]
 			);
 		} 
-		//Display table to terminal.
+		//Display table
 		console.log(deptsummaryTable.toString());
 	});
 
@@ -99,7 +96,6 @@ function  addDept(){
           },
           function(err, res) {
             console.log(res.affectedRows + " product inserted!\n");
-            // Call updateProduct AFTER the INSERT completes
            console.log("You just added a new department: "+answers.department_name+" with overhead costs = $"+answers.overhead_costs);
            setTimeout(init_load, 3000); 
           }
