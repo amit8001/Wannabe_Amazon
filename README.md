@@ -18,6 +18,17 @@ After the manager transactions, see the record for updated product sales for ite
 ![](screenshots/products_manager.png)
 
 <b>Bamazon Supervisor</b></br>
+Used the below query to get a summarized recordset by department depicting metrics like Product Sales & Overhead Costs.
+<b>select d.department_id, </b>
+<b>d.department_name, </b>
+<b>d.overhead_costs, </b>
+<b>dept_rollup.Product_Sales, </b>
+<b>(dept_rollup.Product_Sales-d.overhead_costs) as total_profit </b>
+<b>from departments d inner join </b>
+<b>			(select department_name, sum(product_sales) as Product_Sales </b>
+<b>            from products group by department_name)dept_rollup </b>
+<b>            on d.department_name = dept_rollup.department_name </b>
+
 In the below gif, as a supervisor, we see that the Fitness department has a loss amount of $300. </br> 
 Then a customer comes in and buys 10 quantities of Dumbell (item id=6) worth $100 each, so product sales is incremented by $1000 and then product sales value = $3200, resulting in a new profit of $700.
 ![](gifs/bamazonSupervisor.gif)
