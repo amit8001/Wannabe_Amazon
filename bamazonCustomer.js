@@ -145,7 +145,7 @@ function show_items(){
                   }
                   else{
                    // console.log("Now entering final fulfillment!");
-                    console.log ("Thanks for your order! You total cost is $"+(res[0].price*answers.quantity));
+                    console.log ("Thanks for your order! Your total cost is $"+(res[0].price*answers.quantity));
                     var query = connection.query(
                       "UPDATE products SET ? WHERE ?", [{
                               stock_quantity: (res[0].stock_quantity-answers.quantity),
